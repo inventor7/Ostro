@@ -13,4 +13,8 @@
     box-sizing: border-box;
   }
 }
+.text-icon {
+  @apply flex flex-row justify-center items-center gap-2 cursor-pointer;
+}
+
 
