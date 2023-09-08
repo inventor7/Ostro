@@ -1,6 +1,15 @@
 <template>
-    <Hero />
-    <ProfileModal />
+    <div>
+        <!-- hero has height of screen -->
+        <Hero />
+
+
+        <!-- showcase of products -->
+        <div id="products-section" class=" mt-8 mb-8 ">
+            <h1 class=" text-3xl font-bold text-center mb-8 ">Explore our Collections</h1>
+            <Collections />
+        </div>
+    </div>
 </template>
 
 <script setup >
