@@ -1,13 +1,13 @@
 <template>
     <div>
         <!-- hero has height of screen -->
-        <Hero />
+        <LayoutHero/>
 
 
         <!-- showcase of products -->
         <div id="products-section" class=" mt-8 mb-8 ">
             <h1 class=" text-3xl font-bold text-center mb-8 ">Explore our Collections</h1>
-            <Collections />
+            <LayoutCollections/>
         </div>
     </div>
 </template>

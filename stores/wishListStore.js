@@ -1,17 +1,28 @@
 import { defineStore } from "pinia";
+import { useProductsStore } from "./productsStore";
+import { toRefs } from "vue";
+
 export const useWishListStore = defineStore("wishList", () => {
+  //store
+  const productsStore = useProductsStore();
+
+  //data
+  const { getProducts } = toRefs(productsStore);
 
   //state
   const isOpenWishList = ref(false);
-  const wishListItems = ref([]);
+  const List = ref(
+    getProducts.value.filter((prod) => {
+      return prod.isFavorite === true;
+    })
+  );
 
-  const total = computed(() => {
-    return wishListItems.value.reduce((acc, item) => {
-      return acc + item.price * item.quantity;
-    }, 0);
+  const wishListItems = computed({
+    get: () => List.value,
+    set: (Lista) => {
+      List.value = Lista;
+    },
   });
-
-
 
   //actions
   const toggleWishList = () => {
@@ -24,14 +35,14 @@ export const useWishListStore = defineStore("wishList", () => {
     }
   };
 
-  const addItem = (item) => {
+  const toggleFavorite = (item) => {
     const existingItem = wishListItems.value.find((i) => i.id === item.id);
     if (existingItem) {
-      existingItem.quantity++;
+      removeItem(item.id);
     } else {
-      wishListItems.value.push({
+      wishListItems.value = List.value.push({
         ...item,
-        quantity: 1,
+        isFavorite: true,
       });
     }
   };
@@ -39,20 +50,17 @@ export const useWishListStore = defineStore("wishList", () => {
   const removeItem = (id) => {
     const existingItem = wishListItems.value.find((i) => i.id === id);
     if (existingItem) {
-      if (existingItem.quantity === 1) {
-        wishListItems.value = wishListItems.value.filter((i) => i.id !== id);
-      } else {
-        existingItem.quantity--;
-      }
+      wishListItems.value = wishListItems.value.filter((i) => i.id !== id);
+      console.log(wishListItems.value);
     }
   };
 
   return {
     isOpenWishList,
     wishListItems,
-    total,
+    wishListItems,
     toggleWishList,
-    addItem,
+    toggleFavorite,
     removeItem,
   };
 });

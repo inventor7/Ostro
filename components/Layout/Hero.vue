@@ -10,7 +10,7 @@
                 <img class=" h-20 " src="~/assets/Ostro.svg" alt="">
                 <p id="p-slug" class=" font-semibold text-base tracking-[0.25em]  ">Where style meets youthful spirit</p>
             </div>
-           <SearchHero class="shadow-xl border-t-[1px] " />
+           <InputsSearchHero :isSearchHero="true" class="shadow-xl border-t-[1px] " />
         </div>
 
         <div class=" w-1/2 h-1/4 flex flex-col justify-center items-center " >
@@ -45,5 +45,6 @@
 </template>
 
 <script>
+
 
 </script>

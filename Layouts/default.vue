@@ -1,20 +1,42 @@
 <template>
-    <Navbar :isShowSearchBar="isShowSearchBar" />
-    <Cart />
-    <WishList />
-    <ProfileModal />
+    <LayoutNavbar :isShowSearchBar="isShowSearchBar" />
+    <SideBarCart />
+    <SideBarWishList />
+
     <main class=" mt-24 mb-8 w-[98%] mx-auto  ">
         <slot />
     </main>
-    <Footer />
+    <LayoutFooter />
+
+    <!-- modals -->
+    <Modal 
+    :is-visible="getIsModal"
+    :title="getModal.title" 
+    :done-button="getModal.doneButton"
+    :done-button-color="getModal.doneButtonColor" 
+    :cancel-button="getModal.cancelButton"
+    :is-cancel-button="getModal.isCancelButton" 
+    :cancel-button-collor="getModal.cancelButtonCollor"
+    :body="getModal.body" 
+    />
+
+    <ModalProfileModal />
 </template>
 
 
 
   
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, toRefs } from 'vue';
+import { useModalStore } from '~/stores/modalStore';
 
+
+//store 
+const modalStore = useModalStore();
+const { getModal } = modalStore
+const { getIsModal  } = toRefs(modalStore)
+
+//data
 const isShowSearchBar = ref(false);
 
 
@@ -39,19 +61,9 @@ onUnmounted(() => {
 });
 
 
-
-
-
-
 </script>
 
 <style>
-::-webkit-scrollbar ::-webkit-scrollbar-thumb {
-    display: none;
-
-
-}
-
 ::-webkit-scrollbar {
     display: none;
 }
