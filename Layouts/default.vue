@@ -12,6 +12,10 @@
     <div id="modal">
     </div>
     <ModalProfileModal />
+
+    <!-- Alerts -->
+    <div id="alert" >
+    </div>
 </template>
 
 
@@ -25,7 +29,7 @@ import { useModalStore } from '~/stores/modalStore';
 //store 
 const modalStore = useModalStore();
 const { getModal } = modalStore
-const { getIsModal  } = toRefs(modalStore)
+const { getIsModal } = toRefs(modalStore)
 
 //data
 const isShowSearchBar = ref(false);
@@ -33,10 +37,12 @@ const isShowSearchBar = ref(false);
 
 //if scrollY is more than the height of the hero section, show the search bar (by using it's id)
 const handleScroll = () => {
-    if (window.scrollY > document.querySelector('#hero-container').clientHeight * 0.8) {
-        isShowSearchBar.value = false;
-    } else {
-        isShowSearchBar.value = true;
+    if (document.querySelector('#hero-container')) {
+        if (window.scrollY > document.querySelector('#hero-container').clientHeight * 0.8) {
+            isShowSearchBar.value = false;
+        } else {
+            isShowSearchBar.value = true;
+        }
     }
 }
 

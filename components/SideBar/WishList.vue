@@ -25,7 +25,7 @@
                         <p class="  ">{{ prod.title }}</p>
                         <p class=" text-primary-600">{{ prod.price }}</p>
                     </div>
-                    <div id="prod-total-price" class=" flex flex-col justify-center items-center w-full text-center ">
+                    <div id="prod-total-price" class=" w-full  text-end ">
                         <Icon @click="openModal(prod)"
                             class=" cursor-pointer  p-1 rounded-full text-white bg-primary-600 text-4xl"
                             name="material-symbols:favorite-outline-rounded" />
@@ -45,16 +45,24 @@
     <!-- Modal -->
     <Teleport to="#modal">
         <Transition name="modal">
-            <Modal v-if="isOpen" title="Remove Item" @doneAction="toggleFav()" @cancelAction="closeModal()">
+            <Modal v-if="isOpenModal" title="Remove Item" @doneAction="toggleFav()" @cancelAction="closeModal()">
                 Are you sure you want to remove the item from your wish list ?
             </Modal>
+        </Transition>
+    </Teleport>
+
+    <!-- Alert -->
+    <Teleport to="#alert">
+        <Transition name="slidingRight">
+            <Alert ref="refContainer" v-if="isOpenAlert" title="Success" message="the item is added succefully"
+                type="success" @closeAlert="closeAlert()" />
         </Transition>
     </Teleport>
 </template>
 
 <script setup >
 //essentials
-import { toRefs, onMounted } from 'vue';
+import { onClickOutside } from '@vueuse/core';
 
 //stores
 import { useWishListStore } from '~/stores/wishListStore'
@@ -67,24 +75,42 @@ const wishListStore = useWishListStore();
 const productsStore = useProductsStore();
 const modalStore = useModalStore();
 
-
+//data
 const { getWishList } = toRefs(wishListStore)
-const isOpen = ref(false)
+const isOpenModal = ref(false)
+const isOpenAlert = ref(false)
 const prod = ref(null)
+const refContainer = ref(null)
 
+
+
+
+//funcctions
 const toggleFav = () => {
     wishListStore.toggleWishListItem(prod.value)
-    isOpen.value = false
+    isOpenModal.value = false
+    openAlert()
 }
 
 const openModal = (p) => {
     prod.value = p
-    isOpen.value = true
+    isOpenModal.value = true
 }
 
 const closeModal = () => {
     prod.value = null
-    isOpen.value = false
+    isOpenModal.value = false
+
+}
+
+onClickOutside(refContainer, () => closeAlert())
+
+const closeAlert = () => {
+    isOpenAlert.value = false
+}
+
+const openAlert = () => {
+    isOpenAlert.value = true
 }
 
 </script>
@@ -112,5 +138,17 @@ const closeModal = () => {
 .sliding-enter-from,
 .sliding-leave-to {
     @apply -translate-x-full
+}
+
+
+/* transition for deleting products wishlist */
+.slidingRight-enter-active,
+.slidingRight-leave-active {
+    transition: all 0.3s ease-in-out;
+}
+
+.slidingRight-enter-from,
+.slidingRight-leave-to {
+    @apply translate-x-full
 }
 </style>

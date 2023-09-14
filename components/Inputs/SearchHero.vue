@@ -16,18 +16,27 @@
 
 <script setup>
 import { useProductsStore } from '~/stores/productsStore';
+import { useUtils } from '~/composables/useUtils';
 
 //store
 const { searchProduct } = useProductsStore();
-
+const { scrollTo } = useUtils();
 
 //data
 const searchInput = ref('')
+const productContainer = ref(null)
 
 //hooks
+
+onMounted(() => {
+    productContainer.value = document.querySelector('#products-main-container')
+})
+
 watch(() => {
     searchProduct(searchInput.value)
+    scrollTo(productContainer.value)
 })
+
 
 
 defineProps({

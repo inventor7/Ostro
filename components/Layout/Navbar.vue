@@ -6,13 +6,6 @@
 
             <div id="logo" class=" flex flow-row justify-start items-center gap-8 w-full  ">
                 <NuxtLink to="/"> <img src="~/assets/Ostro.svg" alt=""></NuxtLink>
-                <div id="search-nav" :class="{ 'hidden': !isShowSearchBar, 'flex': isShowSearchBar }"
-                    class="  w-2/5  flex-row justify-between gap-2 border-[1px] border-blackich-500 items-center rounded-xl  px-2 py-1  ">
-                    <button class="text-blackich-300">
-                        <Icon name="material-symbols:search-rounded" size="24px" />
-                    </button>
-                    <input class=" w-full  outline-none" placeholder="Search.." type="text">
-                </div>
             </div>
 
 
@@ -75,7 +68,7 @@
             </div>
         </div>
 
-        <InputsSearchHero :isSearchHero="getSearchHero" />
+        <InputsSearchHero :class="{ 'hidden': isShowSearchBar && useRoute().path === '/' }" :isSearchHero="getSearchHero" />
     </nav>
 </template>
 
@@ -100,13 +93,6 @@ export default {
         const { profileModal, toggleProfileModal  } = useModalStore();
         const  { getSearchHero } = toRefs(useModalStore())
 
-        //functions
-        const scrollToProducts = () => { //scroll to products section
-            const productsSection = document.querySelector('#products-section');
-            if (productsSection) {
-                productsSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        };
         return {
             isOpenCart,
             isOpenwishList,
@@ -114,7 +100,6 @@ export default {
             toggleCart,
             toggleWishList,
             toggleProfileModal,
-            scrollToProducts,
 
             //computed
             getSearchHero

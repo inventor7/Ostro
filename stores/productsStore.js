@@ -199,7 +199,13 @@ export const useProductsStore = defineStore("products", () => {
   //functions
   const filterProductsByType = (type) => {
     processedProducts.value = products.value.filter((prod) => {
-      return prod.type === type;
+      return prod.type.toUpperCase() === type.toUpperCase();
+    });
+  };
+
+  const filterBySubFilter = (subFilter, prodArray = []) => {
+    processedProducts.value = prodArray.filter((prod) => {
+      return prod.type === subFilter;
     });
   };
 
@@ -238,6 +244,7 @@ export const useProductsStore = defineStore("products", () => {
 
     //functions
     filterProductsByType,
+    filterBySubFilter,
     sortProducBy,
     findProductById,
     searchProduct,

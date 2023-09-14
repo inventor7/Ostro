@@ -17,7 +17,7 @@
 
                 <!-- Navigation -->
                 <div class=" flex flex-row justify-start items-center  text-sm  gap-4 text-blackich-300 ">
-                   <NuxtLink to="/products"><span>All Products</span></NuxtLink> 
+                    <NuxtLink to="/products"><span>All Products</span></NuxtLink>
                     <span>
                         <svg class="  " width="20" height="20" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,7 @@
                                 fill="#5F5F5F" />
                         </svg>
                     </span>
-                    <NuxtLink to="/products?type=Shoes" ><span>{{ product.type }}</span></NuxtLink> 
+                    <NuxtLink to="/products?type=Shoes"><span>{{ product.type }}</span></NuxtLink>
                     <span>
                         <svg class="  " width="20" height="20" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +35,8 @@
                                 fill="#5F5F5F" />
                         </svg>
                     </span>
-                <NuxtLink to="/products?brand=Nike"><span class=" text-blackich-100 ">{{ product.brand }}</span></NuxtLink>   
+                    <NuxtLink to="/products?brand=Nike"><span class=" text-blackich-100 ">{{ product.brand }}</span>
+                    </NuxtLink>
                 </div>
 
             </div>
@@ -398,27 +399,7 @@
 
             <h2 class=" text-xl  text-blackich-100   ">Recomanded Stuff</h2>
             <div class=" flex flex-row justify-start items-center gap-4 overflow-x-scroll  ">
-                <ProductDetail id="product-20" title="Nike Air Force 1'07" :rating="4.8"
-                    :colors="['primary', 'gray', 'sky']" price="12.5000" :tags="['summer', '2023']"
-                    class=" min-w-[300px] " />
-                <ProductDetail id="product-20" title="Nike Air Force 1'07" :rating="4.8"
-                    :colors="['primary', 'gray', 'sky']" price="12.5000" :tags="['summer', '2023']"
-                    class=" min-w-[300px] " />
-                <ProductDetail id="product-20" title="Nike Air Force 1'07" :rating="4.8"
-                    :colors="['primary', 'gray', 'sky']" price="12.5000" :tags="['summer', '2023']"
-                    class=" min-w-[300px] " />
-                <ProductDetail id="product-20" title="Nike Air Force 1'07" :rating="4.8"
-                    :colors="['primary', 'gray', 'sky']" price="12.5000" :tags="['summer', '2023']"
-                    class=" min-w-[300px] " />
-                <ProductDetail id="product-20" title="Nike Air Force 1'07" :rating="4.8"
-                    :colors="['primary', 'gray', 'sky']" price="12.5000" :tags="['summer', '2023']"
-                    class=" min-w-[300px] " />
-                <ProductDetail id="product-20" title="Nike Air Force 1'07" :rating="4.8"
-                    :colors="['primary', 'gray', 'sky']" price="12.5000" :tags="['summer', '2023']"
-                    class=" min-w-[300px] " />
-                <ProductDetail id="product-20" title="Nike Air Force 1'07" :rating="4.8"
-                    :colors="['primary', 'gray', 'sky']" price="12.5000" :tags="['summer', '2023']"
-                    class=" min-w-[300px] " />
+                <Product v-for="i in 8"  class=" min-w-[300px]" :id="product.id" :product="product" />
             </div>
         </div>
 
