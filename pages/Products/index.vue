@@ -16,8 +16,5 @@ import { toRefs, ref, onMounted } from 'vue';
 
 const productsStore = useProductsStore()
 
-onMounted(() => {
-    productsStore.getProductsApi()
-})
 
 </script>

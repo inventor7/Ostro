@@ -11,7 +11,6 @@ export const useModalStore = defineStore("modal", () => {
   const isModal = ref(false);
   const modal = ref({
     title: "",
-    body: "",
     cancelButton: "Cancel",
     isCancelButton: true,
     cancelButtonCollor: "base",
@@ -34,17 +33,6 @@ export const useModalStore = defineStore("modal", () => {
     modal.value.isVisible = !modal.value.isVisible;
   };
 
-  const doneAction = (a = Function) => {
-    //indicator for the opening
-    isOk.value = !isOk.value;
-
-    if (isOk.value) {
-      a.call()
-      isModal.value = false;
-    } else {
-      isModal.value = true;
-    }
-  };
 
   const toggleProfileModal = () => {
     profileModal.value = !profileModal.value;
@@ -52,7 +40,7 @@ export const useModalStore = defineStore("modal", () => {
 
   const getSearchHero = computed(() => {
     //only these routes where the SearchHero component will show on the navbar
-    let tr = ["/products"].find((HeroRoute) => {
+    let tr = ["/products","/products/"].find((HeroRoute) => {
       return route.path === HeroRoute;
     });
     if (tr) {
@@ -68,9 +56,7 @@ export const useModalStore = defineStore("modal", () => {
     getModal,
     profileModal,
     getSearchHero,
-
     toggleModal,
-    doneAction,
     toggleProfileModal,
   };
 });

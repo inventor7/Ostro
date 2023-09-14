@@ -11,17 +11,14 @@ export const useWishListStore = defineStore("wishList", () => {
 
   //state
   const isOpenWishList = ref(false);
-  const List = ref(
+  const wishList = ref(
     getProducts.value.filter((prod) => {
       return prod.isFavorite === true;
     })
   );
 
-  const wishListItems = computed({
-    get: () => List.value,
-    set: (Lista) => {
-      List.value = Lista;
-    },
+  const getWishList = computed(() => {
+    return wishList.value;
   });
 
   //actions
@@ -35,32 +32,27 @@ export const useWishListStore = defineStore("wishList", () => {
     }
   };
 
-  const toggleFavorite = (item) => {
-    const existingItem = wishListItems.value.find((i) => i.id === item.id);
-    if (existingItem) {
-      removeItem(item.id);
+  const toggleWishListItem = (item) => {
+    const exisitingItem = wishList.value.find((i) => i.id === item.id);
+    if (exisitingItem) {
+      item.isFavorite = false;
+      wishList.value = wishList.value.filter((i) => i.id !== item.id);
     } else {
-      wishListItems.value = List.value.push({
-        ...item,
-        isFavorite: true,
-      });
-    }
-  };
-
-  const removeItem = (id) => {
-    const existingItem = wishListItems.value.find((i) => i.id === id);
-    if (existingItem) {
-      wishListItems.value = wishListItems.value.filter((i) => i.id !== id);
-      console.log(wishListItems.value);
+      item.isFavorite = true;
+      wishList.value.push(item);
     }
   };
 
   return {
+    //data
+    wishList,
     isOpenWishList,
-    wishListItems,
-    wishListItems,
+
+    //computed
+    getWishList,
+
+    //functions
+    toggleWishListItem,
     toggleWishList,
-    toggleFavorite,
-    removeItem,
   };
 });

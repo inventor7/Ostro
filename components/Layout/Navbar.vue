@@ -93,14 +93,15 @@ export default {
         isShowSearchBar: Boolean
     },
     setup() {
+
+        //store
         const { isOpenCart, toggleCart } = useCartStore();
         const { isOpenwishList, toggleWishList } = useWishListStore();
-        const { profileModal, toggleProfileModal } = useModalStore();
-        let getSearchHero = computed(() => {
-            return useModalStore().getSearchHero;
-        });
-        //scroll to products section
-        const scrollToProducts = () => {
+        const { profileModal, toggleProfileModal  } = useModalStore();
+        const  { getSearchHero } = toRefs(useModalStore())
+
+        //functions
+        const scrollToProducts = () => { //scroll to products section
             const productsSection = document.querySelector('#products-section');
             if (productsSection) {
                 productsSection.scrollIntoView({ behavior: 'smooth' });
@@ -114,6 +115,8 @@ export default {
             toggleWishList,
             toggleProfileModal,
             scrollToProducts,
+
+            //computed
             getSearchHero
         };
     },

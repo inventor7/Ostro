@@ -1,10 +1,15 @@
 import { defineStore } from "pinia";
 export const useCartStore = defineStore("cart", () => {
-
   //state
   const isOpenCart = ref(false);
   const cartItems = ref([]);
-  
+
+
+  //computed
+  const getCartItems = computed(() => {
+    return cartItems.value
+  });
+
   const total = computed(() => {
     return cartItems.value.reduce((acc, item) => {
       return acc + item.price * item.quantity;
@@ -12,8 +17,7 @@ export const useCartStore = defineStore("cart", () => {
   });
 
 
-
-  //actions
+  //functions
   const toggleCart = () => {
     isOpenCart.value = !isOpenCart.value;
 
@@ -49,9 +53,15 @@ export const useCartStore = defineStore("cart", () => {
   };
 
   return {
+    //data
     isOpenCart,
     cartItems,
+
+    //computed
     total,
+    getCartItems,
+
+    //functions
     toggleCart,
     addItem,
     removeItem,

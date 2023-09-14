@@ -9,17 +9,8 @@
     <LayoutFooter />
 
     <!-- modals -->
-    <Modal 
-    :is-visible="getIsModal"
-    :title="getModal.title" 
-    :done-button="getModal.doneButton"
-    :done-button-color="getModal.doneButtonColor" 
-    :cancel-button="getModal.cancelButton"
-    :is-cancel-button="getModal.isCancelButton" 
-    :cancel-button-collor="getModal.cancelButtonCollor"
-    :body="getModal.body" 
-    />
-
+    <div id="modal">
+    </div>
     <ModalProfileModal />
 </template>
 
@@ -51,13 +42,11 @@ const handleScroll = () => {
 
 onMounted(() => {
     window.addEventListener('scroll', handleScroll);
-    console.log('mounted');
 });
 
 
 onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll);
-    console.log('unmounted');
 });
 
 

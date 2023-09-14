@@ -4,7 +4,9 @@
         <!-- BroadCamp -->
         <div class="flex flex-row justify-between items-center w-full  font-semibold ">
             <div class=" flex flex-row justify-start items-center gap-10 ">
-                <div class=" bg-primary-600 p-1  rounded-full  ">
+
+                <!-- Back button -->
+                <div @click="router.back()" class=" cursor-pointer bg-primary-600 p-1  rounded-full  ">
                     <svg class=" rotate-180 " width="20" height="20" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -13,8 +15,9 @@
                     </svg>
                 </div>
 
+                <!-- Navigation -->
                 <div class=" flex flex-row justify-start items-center  text-sm  gap-4 text-blackich-300 ">
-                    <span>All Products</span>
+                   <NuxtLink to="/products"><span>All Products</span></NuxtLink> 
                     <span>
                         <svg class="  " width="20" height="20" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +26,7 @@
                                 fill="#5F5F5F" />
                         </svg>
                     </span>
-                    <span>Shoes</span>
+                    <NuxtLink to="/products?type=Shoes" ><span>{{ product.type }}</span></NuxtLink> 
                     <span>
                         <svg class="  " width="20" height="20" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -32,11 +35,11 @@
                                 fill="#5F5F5F" />
                         </svg>
                     </span>
-                    <span class=" text-blackich-100 ">Nike</span>
+                <NuxtLink to="/products?brand=Nike"><span class=" text-blackich-100 ">{{ product.brand }}</span></NuxtLink>   
                 </div>
 
-
             </div>
+
             <div class=" text-xl font-normal border border-primary-600 rounded-xl text-primary-600  px-5 py-1 ">
                 Nike
             </div>
@@ -94,7 +97,8 @@
                     <div class=" w-full space-y-6 ">
                         <div class=" flex flex-row justify-between items-center w-full ">
                             <h2 class=" text-4xl font-bold text-blackich-100">{{ product.title }}</h2>
-                           <FavoriteComponent :prod="product" :is-favorite="!product.isFavorite" />
+                            <ButtonFavoriteComponent class=" text-5xl p-1 " :prod="product"
+                                :is-favorite="product.isFavorite" />
                         </div>
                         <div class=" flex flex-row justify-center items-center w-full text-xl  text-blackich-300 ">
                             <div class=" flex flex-row justify-start items-center text-center   gap-1.5 w-full border-r-2 ">
@@ -422,18 +426,17 @@
 </template>
 
 <script setup>
-import { useRoute } from "nuxt/app";
-import { onMounted } from 'vue'
-
 //store
 import { useProductsStore } from '~/stores/productsStore'
-const productsStore = useProductsStore();
-let id = ref(useRoute().params.id)
 
-const { findProductById } = productsStore
-let product = findProductById(id.value);
+//store
+const { findProductById } = useProductsStore();
+const route = useRoute();
+const router = useRouter();
 
-
+//data
+let id = ref(route.params.id)
+let product = ref(findProductById(id.value));
 
 
 

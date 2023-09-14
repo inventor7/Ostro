@@ -1,47 +1,87 @@
 <template>
-  <div class=" flex flex-row justify-between items-center w-full h-fit border border-gray-300 rounded-xl p-2  ">
-    <div class="flex flex-row justify-center items-center gap-2  ">
+  <div class=" flex flex-row justify-between items-center w-full h-fit font-semibold text-blackich-200 border border-gray-300 rounded-xl p-2  ">
+    <div @click="sort('year')" class="sortButton" :class="{ 'activeSort': sorters[0].value }">
+      <p>Year</p>
+      <SortersIcon :is-active="sorters[0].value" :acsending="isOdd" />
+    </div>
+
+    <div @click="sort('price')" class="sortButton" :class="{ 'activeSort': sorters[1].value }">
       <p>Price</p>
-      <svg width="8" height="16" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M0.946319 13.2961H10.305C11.1465 13.2961 11.5673 14.9175 10.9735 15.8629L6.29416 23.3129C5.92453 23.9013 5.32683 23.9013 4.96113 23.3129L0.277839 15.8629C-0.315928 14.9175 0.104821 13.2961 0.946319 13.2961Z"
-          fill="#4F4F4F" />
-        <path
-          d="M0.946319 10.4581H10.305C11.1465 10.4581 11.5673 8.83666 10.9735 7.89133L6.29416 0.441352C5.92453 -0.147133 5.32683 -0.147133 4.96113 0.441352L0.277839 7.89133C-0.315928 8.83666 0.104821 10.4581 0.946319 10.4581Z"
-          fill="#4F4F4F" />
-      </svg>
+      <SortersIcon :is-active="sorters[1].value" :acsending="isOdd" />
 
     </div>
 
-    <div class="flex flex-row justify-center items-center gap-2  ">
+    <div @click="sort('rating')" class="sortButton" :class="{ 'activeSort': sorters[2].value }">
       <p>Rating</p>
-      <svg width="8" height="16" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M0.946319 13.2961H10.305C11.1465 13.2961 11.5673 14.9175 10.9735 15.8629L6.29416 23.3129C5.92453 23.9013 5.32683 23.9013 4.96113 23.3129L0.277839 15.8629C-0.315928 14.9175 0.104821 13.2961 0.946319 13.2961Z"
-          fill="#4F4F4F" />
-        <path
-          d="M0.946319 10.4581H10.305C11.1465 10.4581 11.5673 8.83666 10.9735 7.89133L6.29416 0.441352C5.92453 -0.147133 5.32683 -0.147133 4.96113 0.441352L0.277839 7.89133C-0.315928 8.83666 0.104821 10.4581 0.946319 10.4581Z"
-          fill="#4F4F4F" />
-      </svg>
-
-    </div>
-
-
-    <div class="flex flex-row justify-center items-center gap-2  ">
-      <p>Sales</p>
-      <svg width="8" height="16" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M0.946319 13.2961H10.305C11.1465 13.2961 11.5673 14.9175 10.9735 15.8629L6.29416 23.3129C5.92453 23.9013 5.32683 23.9013 4.96113 23.3129L0.277839 15.8629C-0.315928 14.9175 0.104821 13.2961 0.946319 13.2961Z"
-          fill="#4F4F4F" />
-        <path
-          d="M0.946319 10.4581H10.305C11.1465 10.4581 11.5673 8.83666 10.9735 7.89133L6.29416 0.441352C5.92453 -0.147133 5.32683 -0.147133 4.96113 0.441352L0.277839 7.89133C-0.315928 8.83666 0.104821 10.4581 0.946319 10.4581Z"
-          fill="#4F4F4F" />
-      </svg>
-
+      <SortersIcon :is-active="sorters[2].value" :acsending="isOdd" />
     </div>
   </div>
 </template>
 
 <script setup>
+import { useProductsStore } from '~/stores/productsStore'
+
+//store
+const { sortProducBy } = useProductsStore();
+
+
+//data
+const sorters = ref([
+  {
+    name: 'year',
+    value: false
+  },
+  {
+    name: 'price',
+    value: false
+  },
+  {
+    name: 'rating',
+    value: false
+  }
+])
+const clickNumber = ref(2)
+
+
+//computed
+const isOdd = computed(() => {
+  return clickNumber.value % 2 === 0
+})
+
+
+
+//functions
+const sort = (sort) => {
+
+  //active the  sort clicked button
+  sorters.value.forEach((srt) => {
+    if (srt.name === sort) {
+      srt.value = true
+    } else {
+      srt.value = false
+    }
+  })
+
+  //sort asccending or disacsending
+  if (isOdd.value) {
+    clickNumber.value++
+    sortProducBy(sort, 1)
+  } else {
+    clickNumber.value--
+    sortProducBy(sort, -1)
+  }
+
+}
 
 </script>
+
+<style>
+.activeSort {
+  @apply bg-primary-600/20 text-primary-600
+}
+
+.sortButton {
+  @apply flex flex-row justify-center items-center gap-2 px-3 py-1 rounded-md cursor-pointer select-none
+}
+</style>
+

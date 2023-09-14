@@ -1,18 +1,18 @@
 <template>
   <div v-if="isVisible"
-    class=" absolute inset-0 z-50 flex flex-col justify-center items-center  bg-black/25 w-full h-full ">
+    class=" fixed inset-0 z-50 flex flex-col justify-center items-center  bg-black/25 w-full h-full ">
     <div
       class=" flex flex-col justify-between items-start w-1/3 h-fit gap-6 max-h-[70vh]  bg-white rounded-2xl font-semibold  p-4">
       <div id="modal-title">
         <p class=" text-2xl text-blackich-100  ">{{ title }}</p>
       </div>
 
-      <div id="modal-body  ">
-        <p class=" text-sm text-blackich-200 ">{{ body }}</p>
+      <div id="modal-body" class="flex flex-col justify-start items-start gap-4 text-sm text-blackich-200 ">
+        <slot />
       </div>
 
-      <div id="modal-action" class="flex flex-row justify-end items-center gap-4 w-full ">
-        <button @click="modalStore.isModal = false" v-if="isCancelButton" class=" px-4 py-1 rounded-lg text-xl " :class="{
+      <div v-if="isModalAction" id="modal-action" class="flex flex-row justify-end items-center gap-4 w-full ">
+        <button @click="handleCancel()" v-if="isCancelButton" class=" px-4 py-1 rounded-lg text-lg " :class="{
           'bg-primary-600 text-white ': cancelButtonCollor === 'primary',
           'bg-red-600 text-white ': cancelButtonCollor === 'danger',
           'bg-gray-300/50 text-blackich-200  ': cancelButtonCollor === 'base',
@@ -21,7 +21,7 @@
           {{ cancelButton }}
         </button>
 
-        <button @click="modalStore.doneAction()" class=" px-4 py-1  rounded-lg text-xl " :class="{
+        <button @click="handleDone()" class=" px-4 py-1  rounded-lg text-lg " :class="{
           'bg-primary-600 text-white': doneButtonColor === 'primary',
           'bg-red-600 text-white ': doneButtonColor === 'danger',
           'bg-gray-300/50 text-blackich-200 ': doneButtonColor === 'base',
@@ -38,21 +38,41 @@
 import { defineProps, defineEmits } from 'vue';
 import { useModalStore } from '~/stores/modalStore';
 
+
 //store
 const modalStore = useModalStore();
 
 
 
+const handleCancel = () => {
+  emit("cancelAction")
+}
+
+const handleDone = () => {
+  emit("doneAction")
+}
 
 
-defineProps({
+const emit = defineEmits(['doneAction', 'cancelAction'])
+const props = defineProps({
   isVisible: {
     type: Boolean,
-    default: false
+    default: true
   },
+
   title: String,
-  body: String,
-  cancelButton: String,
+
+  //modalAction
+  isModalAction: {
+    type: Boolean,
+    default: true
+  },
+
+  //cancel button
+  cancelButton: {
+    type: String,
+    default: 'Cancel'
+  },
   isCancelButton: {
     type: Boolean,
     default: true
@@ -61,7 +81,13 @@ defineProps({
     type: String,
     default: 'base'
   },
-  doneButton: String,
+
+
+  //done button
+  doneButton: {
+    type: String,
+    default: 'Done'
+  },
   doneButtonColor: {
     type: String,
     default: 'primary'
