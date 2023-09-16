@@ -14,7 +14,11 @@
     <ModalProfileModal />
 
     <!-- Alerts -->
-    <div id="alert" >
+    <div class="fixed z-[60] right-2 top-2 w-1/3 space-y-4">
+        <TransitionGroup name="slidingRight">
+            <Alert v-for="al in Alerts" :key="al.index" :status="al.status" :title="al.title" :message="al.message"
+                :type="al.type" @closeAlert="al.status = false" />
+        </TransitionGroup>
     </div>
 </template>
 
@@ -23,17 +27,15 @@
   
 <script setup>
 import { ref, onMounted, onUnmounted, toRefs } from 'vue';
-import { useModalStore } from '~/stores/modalStore';
+import { useAlertStore } from '~/stores/alertStore';
 
 
 //store 
-const modalStore = useModalStore();
-const { getModal } = modalStore
-const { getIsModal } = toRefs(modalStore)
+const alertStore = useAlertStore()
 
 //data
 const isShowSearchBar = ref(false);
-
+const { Alerts } = toRefs(alertStore)
 
 //if scrollY is more than the height of the hero section, show the search bar (by using it's id)
 const handleScroll = () => {

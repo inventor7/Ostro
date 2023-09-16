@@ -21,9 +21,16 @@
                     <div class="prod-img w-full">
                         <img src="~/assets/nike1.jpg" class=" w-full object-cover h-28 rounded-xl " alt="">
                     </div>
-                    <div class="flex flex-col justify-start items-start gap-1 text-start w-full ">
-                        <p class="  ">{{ prod.title }}</p>
-                        <p class=" text-primary-600">{{ prod.price }}</p>
+                    <div class="flex flex-col justify-start items-start gap-1 text-start w-full font-semibold ">
+                        <p class=" text-lg text-blackich-100  whitespace-nowrap ">{{ prod.title }}</p>
+                        <div id="product-rating"
+                            class="flex flex-row justify-center items-center backdrop-blur-lg rounded-xl gap-[0.5px] ">
+                            <p class=" text-blackich-200">{{ prod.rating }}</p>
+                            <Icon class=" text-2xl text-center text-yellow-400  pb-1"
+                                name="material-symbols:star-rounded" />
+                        </div>
+                        <p class=" text-primary-600">{{ prod.price.valueOf().toFixed(3) }} <span
+                                class=" text-blackich-300 ">DZD</span></p>
                     </div>
                     <div id="prod-total-price" class=" w-full  text-end ">
                         <Icon @click="openModal(prod)"
@@ -50,46 +57,32 @@
             </Modal>
         </Transition>
     </Teleport>
-
-    <!-- Alert -->
-    <Teleport to="#alert">
-        <Transition name="slidingRight">
-            <Alert ref="refContainer" v-if="isOpenAlert" title="Success" message="the item is added succefully"
-                type="success" @closeAlert="closeAlert()" />
-        </Transition>
-    </Teleport>
 </template>
 
 <script setup >
-//essentials
-import { onClickOutside } from '@vueuse/core';
-
 //stores
 import { useWishListStore } from '~/stores/wishListStore'
-import { useProductsStore } from '~/stores/productsStore';
-import { useModalStore } from '~/stores/modalStore'
-
+import { useAlertStore } from '~/stores/alertStore';
 
 //store
 const wishListStore = useWishListStore();
-const productsStore = useProductsStore();
-const modalStore = useModalStore();
+const alertStore = useAlertStore();
 
 //data
 const { getWishList } = toRefs(wishListStore)
 const isOpenModal = ref(false)
-const isOpenAlert = ref(false)
 const prod = ref(null)
-const refContainer = ref(null)
 
 
 
 
 //funcctions
+const { doAlert } = alertStore
+
 const toggleFav = () => {
     wishListStore.toggleWishListItem(prod.value)
     isOpenModal.value = false
-    openAlert()
+    doAlert('success', 'Success', `the is removed succesfully`, 3000)
 }
 
 const openModal = (p) => {
@@ -101,16 +94,6 @@ const closeModal = () => {
     prod.value = null
     isOpenModal.value = false
 
-}
-
-onClickOutside(refContainer, () => closeAlert())
-
-const closeAlert = () => {
-    isOpenAlert.value = false
-}
-
-const openAlert = () => {
-    isOpenAlert.value = true
 }
 
 </script>

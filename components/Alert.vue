@@ -1,5 +1,5 @@
 <template>
-    <div class=" fixed z-[60] right-2 top-2 flex flex-col items-end w-1/3 h-fit">
+    <div v-if="status" class="  flex flex-col items-end w-full h-fit">
         <div class=" font-semibold w-full space-y-1 h-full text-white  rounded-md p-2 " :class="{
             'bg-primary-600': type === 'success',
             'bg-red-600': type === 'danger',
@@ -21,10 +21,8 @@
 const props = defineProps({
     title: String,
     message: String,
-    type: {
-        type: String,
-        default: 'success'
-    }
+    type: String,
+    status: Boolean
 })
 const emits = defineEmits(['closeAlert'])
 </script>
