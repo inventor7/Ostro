@@ -3,7 +3,7 @@
     <SideBarCart />
     <SideBarWishList />
 
-    <main class=" mt-24 mb-8 w-[98%] mx-auto  ">
+    <main class=" bg-slate-50  mt-24 mb-8 w-[98%] mx-auto   ">
         <slot />
     </main>
     <LayoutFooter />

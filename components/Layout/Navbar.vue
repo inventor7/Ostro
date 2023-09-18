@@ -10,8 +10,7 @@
 
 
 
-            <div id="products-navigation"
-                class=" flex flex-row justify-center items-center gap-8 z-20 fixed inset-x-1/2 top-0 -translate-x-1/2 w-fit h-[58px]  ">
+            <div id="products-navigation" class=" flex flex-row justify-center items-center gap-8 z-20   w-fit h-[58px]  ">
                 <NuxtLink class=" h-full " to="/products">
                     <div class=" flex flex-col justify-between items-center h-full group cursor-pointer  ">
                         <span class=" w-full  h-1 rounded-full "></span>
@@ -53,8 +52,8 @@
             </div>
 
             <div id="profile"
-                class="flex flex-row justify-start items-center cursor-pointer gap-8 w-full text-blackich-100 ">
-                <ul class=" flex flex-row justify-end items-center w-full gap-8 ">
+                class="flex flex-row justify-start items-center cursor-pointer gap-8 w-full text-blackich-100 px-10 ">
+                <ul class=" flex flex-row justify-between items-center w-full gap-8 ">
                     <li @click="toggleWishList()" class=" text-icon ">
                         <Icon name="material-symbols:favorite-outline-rounded" size="24px" /> <span class=" text-lg ">Wish
                             List</span>
@@ -64,7 +63,17 @@
                             class=" text-lg ">Cart</span>
                     </li>
                 </ul>
-                <img @click="toggleProfileModal()" src="~/assets/imn-profile.png" alt="">
+                <img v-if="isLoggedIn" @click="toggleProfileModal()" src="~/assets/imn-profile.png" alt="">
+                <div v-else class=" flex flex-row justify-start items-center gap-6 ">
+                    <button @click="handleClickReg()"
+                        class=" px-4 py-1.5 text-lg font-semibold hover:bg-gray-200/40 bg-gray-100/40 hover:text-blackich-200 text-blackich-100 rounded-md transition-all duration-100 ease-in-out  ">
+                        Register
+                    </button>
+                    <button
+                        class=" px-4 py-1.5 text-lg font-semibold bg-primary-600 text-white rounded-md transition-all duration-100 ease-in-out  ">
+                        Login
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -72,38 +81,29 @@
     </nav>
 </template>
 
-<script>
-//store
+<script setup >
 import { useCartStore } from '~/stores/cartStore';
 import { useWishListStore } from '~/stores/wishListStore';
 import { useModalStore } from '~/stores/modalStore';
+import { useAuthStore } from '~/stores/authStore';
 
 
+//functions
+const { toggleCart } = useCartStore();
+const { toggleWishList } = useWishListStore();
+const { toggleProfileModal } = useModalStore();
 
-export default {
-    name: 'Navbar',
-    props: {
-        isShowSearchBar: Boolean
-    },
-    setup() {
+//data
+const { getSearchHero } = toRefs(useModalStore());
+const { user, isLoggedIn } = toRefs(useAuthStore())
 
-        //store
-        const { isOpenCart, toggleCart } = useCartStore();
-        const { isOpenwishList, toggleWishList } = useWishListStore();
-        const { profileModal, toggleProfileModal  } = useModalStore();
-        const  { getSearchHero } = toRefs(useModalStore())
+const handleClickReg = () => {
+    useRouter().push('/auth/register')
 
-        return {
-            isOpenCart,
-            isOpenwishList,
-            profileModal,
-            toggleCart,
-            toggleWishList,
-            toggleProfileModal,
-
-            //computed
-            getSearchHero
-        };
-    },
 }
+
+defineProps({
+    isShowSearchBar: Boolean
+})
+
 </script>

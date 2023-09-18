@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-6 w-full h-full p-2 space-y-4">
+  <div class="pb-6 w-full h-full p-2 space-y-4 bg-white ">
     <!-- Sorter -->
     <Sorters class=" sticky top-0 inset-x-0  bg-white" />
     <!-- Brands -->

@@ -1,6 +1,6 @@
 <template>
-    <img class="absolute -z-10 top-0 right-0 h-2/3  " src="~/assets/bubble-up.svg" alt="">
-    <img class="absolute -z-10 -bottom-64 left-0 h-4/5 rota   " src="~/assets/bubble.svg" alt="">
+    <img class="absolute z-0 top-0 right-0 h-2/3  " src="~/assets/bubble-up.svg" alt="">
+    <img class="absolute z-0 -bottom-64 left-0 h-4/5 rota   " src="~/assets/bubble.svg" alt="">
 
     <div id="hero-container"
         class="flex flex-col  -mt-24 justify-end  items-center w-full h-screen  text-blackich-100 ">
