@@ -6,14 +6,7 @@
             <div class=" flex flex-row justify-start items-center gap-10 ">
 
                 <!-- Back button -->
-                <div @click="router.back()" class=" cursor-pointer bg-primary-600 p-1  rounded-full  ">
-                    <svg class=" rotate-180 " width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M14.475 12L7.12499 4.65C6.87499 4.4 6.75415 4.10417 6.76249 3.7625C6.77082 3.42083 6.89999 3.125 7.14999 2.875C7.39999 2.625 7.69582 2.5 8.03749 2.5C8.37915 2.5 8.67499 2.625 8.92499 2.875L16.6 10.575C16.8 10.775 16.95 11 17.05 11.25C17.15 11.5 17.2 11.75 17.2 12C17.2 12.25 17.15 12.5 17.05 12.75C16.95 13 16.8 13.225 16.6 13.425L8.89999 21.125C8.64999 21.375 8.35832 21.4958 8.02499 21.4875C7.69165 21.4792 7.39999 21.35 7.14999 21.1C6.89999 20.85 6.77499 20.5542 6.77499 20.2125C6.77499 19.8708 6.89999 19.575 7.14999 19.325L14.475 12Z"
-                            fill="#FFFF" />
-                    </svg>
-                </div>
+                <ButtonBack />
 
                 <!-- Navigation -->
                 <div class=" flex flex-row justify-start items-center  text-sm  gap-4 text-blackich-300 ">
@@ -399,7 +392,7 @@
 
             <h2 class=" text-xl  text-blackich-100   ">Recomanded Stuff</h2>
             <div class=" flex flex-row justify-start items-center gap-4 overflow-x-scroll  ">
-                <Product v-for="i in 8"  class=" min-w-[300px]" :id="product.id" :product="product" />
+                <Product v-for="i in 8" class=" min-w-[300px]" :id="product.id" :product="product" />
             </div>
         </div>
 

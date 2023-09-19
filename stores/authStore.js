@@ -5,6 +5,7 @@ export const useAuthStore = defineStore("auth", () => {
   //data
   const user = ref({});
   const isLoggedIn = ref(false);
+  const pending = ref(false);
   const errors = ref({});
 
   //computed
@@ -24,14 +25,6 @@ export const useAuthStore = defineStore("auth", () => {
       body: form,
     });
 
-    if (res.status.value === "success") {
-      isLoggedIn.value = true;
-      user.value = res.data.value.data.user;
-      navigateTo("/");
-    } else {
-      errors.value = res.error.value.data.errors;
-    }
-    console.log(res);
     return res;
   };
 
@@ -39,6 +32,7 @@ export const useAuthStore = defineStore("auth", () => {
     //data
     user,
     isLoggedIn,
+    pending,
     errors,
 
     //computed

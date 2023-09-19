@@ -14,7 +14,7 @@
     <ModalProfileModal />
 
     <!-- Alerts -->
-    <div class="fixed z-[60] right-2 top-2 w-1/3 space-y-4">
+    <div class="fixed z-[60] right-2 bottom-2 w-1/3 space-y-4">
         <TransitionGroup name="slidingRight">
             <Alert v-for="al in Alerts" :key="al.index" :status="al.status" :title="al.title" :message="al.message"
                 :type="al.type" @closeAlert="al.status = false" />
