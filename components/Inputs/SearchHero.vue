@@ -32,7 +32,7 @@ onMounted(() => {
     productContainer.value = document.querySelector('#products-main-container')
 })
 
-watch(() => {
+watchEffect(() => {
     searchProduct(searchInput.value)
     scrollTo(productContainer.value)
 })

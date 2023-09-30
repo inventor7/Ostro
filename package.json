@@ -19,6 +19,7 @@
     "postcss": "^8.4.29"
   },
   "dependencies": {
+    "install": "^0.13.0",
     "pinia": "^2.1.6"
   }
 }
